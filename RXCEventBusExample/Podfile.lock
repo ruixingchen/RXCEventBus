@@ -1,0 +1,23 @@
+PODS:
+  - RXCEventBus (1.0):
+    - RXCWeakReferenceArray (= 1.0)
+  - RXCWeakReferenceArray (1.0)
+
+DEPENDENCIES:
+  - RXCEventBus (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - RXCWeakReferenceArray
+
+EXTERNAL SOURCES:
+  RXCEventBus:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  RXCEventBus: ef5c8dba46aafe2ff6732357503453ab78978b5f
+  RXCWeakReferenceArray: 5e2b57f31164c46d82e577deb4cf2ffc7e551021
+
+PODFILE CHECKSUM: 4f1cea9ef19476c306aedd9a78417e91b64cc4b7
+
+COCOAPODS: 1.7.3
