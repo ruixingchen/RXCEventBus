@@ -17,6 +17,4 @@ Pod::Spec.new do |spec|
   spec.requires_arc = true
   spec.swift_versions = "5.0"
 
-  spec.dependency "RXCWeakReferenceArray", "1.0"
-
 end
