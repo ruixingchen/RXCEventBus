@@ -10,13 +10,37 @@
 		8077237B2367C6D800592845 /* RXCEventBus.h in Headers */ = {isa = PBXBuildFile; fileRef = 807723792367C6D800592845 /* RXCEventBus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		807723832367C70F00592845 /* RXCEventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807723822367C70F00592845 /* RXCEventBus.swift */; };
 		8077238B2367D85B00592845 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8077238A2367D85B00592845 /* AppDelegate.swift */; };
-		8077238D2367D85B00592845 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8077238C2367D85B00592845 /* SceneDelegate.swift */; };
 		8077238F2367D85B00592845 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8077238E2367D85B00592845 /* ViewController.swift */; };
 		807723922367D85B00592845 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 807723902367D85B00592845 /* Main.storyboard */; };
 		807723942367D85C00592845 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 807723932367D85C00592845 /* Assets.xcassets */; };
 		807723972367D85C00592845 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 807723952367D85C00592845 /* LaunchScreen.storyboard */; };
-		8077239C23681D0400592845 /* RXCEventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807723822367C70F00592845 /* RXCEventBus.swift */; };
+		8099C3D223686E4B00890A35 /* RXCEventBus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807723762367C6D800592845 /* RXCEventBus.framework */; };
+		8099C3D323686E4C00890A35 /* RXCEventBus.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 807723762367C6D800592845 /* RXCEventBus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8099C3D423686E4C00890A35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8077236D2367C6D800592845 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 807723752367C6D800592845;
+			remoteInfo = RXCEventBus;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8099C3D623686E4C00890A35 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8099C3D323686E4C00890A35 /* RXCEventBus.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		807723762367C6D800592845 /* RXCEventBus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RXCEventBus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -25,7 +49,6 @@
 		807723822367C70F00592845 /* RXCEventBus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RXCEventBus.swift; sourceTree = "<group>"; };
 		807723882367D85B00592845 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8077238A2367D85B00592845 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8077238C2367D85B00592845 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8077238E2367D85B00592845 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		807723912367D85B00592845 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		807723932367D85C00592845 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -45,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8099C3D223686E4B00890A35 /* RXCEventBus.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +82,7 @@
 				807723782367C6D800592845 /* RXCEventBus */,
 				807723892367D85B00592845 /* Example */,
 				807723772367C6D800592845 /* Products */,
+				8099C3D123686E4B00890A35 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				8077238A2367D85B00592845 /* AppDelegate.swift */,
-				8077238C2367D85B00592845 /* SceneDelegate.swift */,
 				8077238E2367D85B00592845 /* ViewController.swift */,
 				807723902367D85B00592845 /* Main.storyboard */,
 				807723932367D85C00592845 /* Assets.xcassets */,
@@ -99,6 +123,13 @@
 				807723982367D85C00592845 /* Info.plist */,
 			);
 			path = Example;
+			sourceTree = "<group>";
+		};
+		8099C3D123686E4B00890A35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,10 +171,12 @@
 				807723842367D85B00592845 /* Sources */,
 				807723852367D85B00592845 /* Frameworks */,
 				807723862367D85B00592845 /* Resources */,
+				8099C3D623686E4C00890A35 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8099C3D523686E4C00890A35 /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
@@ -221,13 +254,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				8077238F2367D85B00592845 /* ViewController.swift in Sources */,
-				8077239C23681D0400592845 /* RXCEventBus.swift in Sources */,
 				8077238B2367D85B00592845 /* AppDelegate.swift in Sources */,
-				8077238D2367D85B00592845 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8099C3D523686E4C00890A35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 807723752367C6D800592845 /* RXCEventBus */;
+			targetProxy = 8099C3D423686E4C00890A35 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		807723902367D85B00592845 /* Main.storyboard */ = {
@@ -426,6 +465,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 977G6XM9PF;
 				INFOPLIST_FILE = Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -444,6 +484,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 977G6XM9PF;
 				INFOPLIST_FILE = Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

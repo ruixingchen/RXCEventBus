@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RXCEventBus
 
 @discardableResult
 func measureTime(identifier:String,quantity:Int, closure:()->Void)->TimeInterval {
