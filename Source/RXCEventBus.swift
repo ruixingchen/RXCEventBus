@@ -9,9 +9,7 @@
 import Foundation
 
 public protocol REBEventBusReceiver: AnyObject {
-
     func eventBus(didReceive event:REBEventProtocol)
-
 }
 
 public protocol REBEventProtocol {
@@ -39,14 +37,14 @@ public final class RXCEventBus {
 
     public enum ReceiveMode: Equatable {
 
-        ///receiver all events
+        ///receive all events
         case all
         ///only receive events with specific eventType
         case eventType(String)
         ///only receive events with specific eventType and eventSubtype
         case subtype(String, String)
 
-        ///custom receive type
+        ///custom receive mode
         ///the first string is for identifing the receiver, should be a unique string while uuid is recommended, if you want to remove a receiver with custom mode, should save the identifier and pass it in the unregister function
         case custom(String, ((REBEventProtocol)->Bool)?)
 
@@ -75,7 +73,7 @@ public final class RXCEventBus {
             if lhs.receiveMode != rhs.receiveMode {return false}
             return true
         }
-
+        ///do not retain receiver
         weak var receiver:AnyObject?
         let receiveMode:ReceiveMode
         var queue:DispatchQueue?
@@ -158,7 +156,7 @@ public final class RXCEventBus {
         return registration
     }
 
-    ///register a receiver when is is a REBEventBusReceiver, will call the didReceive function directly
+    ///register a receiver when it is a REBEventBusReceiver, will call the didReceive function directly
     @discardableResult
     public func register(receiver:REBEventBusReceiver, receiveMode:ReceiveMode, queue:DispatchQueue?, allowDuplication:Bool=true)->AnyObject {
         let registration = ReceiverRegistration(receiver: receiver, receiveMode: receiveMode)
@@ -179,7 +177,9 @@ public final class RXCEventBus {
 
     fileprivate func _register(registration:ReceiverRegistration, allowDuplication:Bool) {
 
-        let containsClosure:(Any)->Bool = {($0 as! ReceiverRegistration) == registration}
+        let containsClosure:(Any)->Bool = {
+            ($0 as! ReceiverRegistration) == registration
+        }
 
         switch registration.receiveMode {
         case .all:
