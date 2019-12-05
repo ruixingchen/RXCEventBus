@@ -23,9 +23,9 @@ struct LoginManager {
     static func login() {
         DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
             if Bool.random() {
-                RXCEventBus.default.post(eventType: EventType.Login.login, subtype: EventType.Login.Subtype.failed, object: nil, userInfo: ["reason": "Network Connection Failed"])
+                RXCEventBus.shared.post(eventType: EventType.Login.login, subtype: EventType.Login.Subtype.failed, object: nil, userInfo: ["reason": "Network Connection Failed"])
             }else {
-                RXCEventBus.default.post(eventType: EventType.Login.login, subtype: EventType.Login.Subtype.success, object: nil, userInfo: ["userName": "User\(Int.random(in: 10000...100000))"])
+                RXCEventBus.shared.post(eventType: EventType.Login.login, subtype: EventType.Login.Subtype.success, object: nil, userInfo: ["userName": "User\(Int.random(in: 10000...100000))"])
             }
         }
     }
@@ -54,14 +54,14 @@ class ViewController: UIViewController, REBEventBusReceiver {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        RXCEventBus.default.register(receiver: self, receiveMode: .subtype(EventType.Login.login, EventType.Login.Subtype.success), queue: DispatchQueue.main) {[weak self] (event) in
+        RXCEventBus.shared.register(receiver: self, receiveMode: .subtype(EventType.Login.login, EventType.Login.Subtype.success), queue: DispatchQueue.main) {[weak self] (event) in
 
             self?.stateLabel.text = "Good Morning, \(event.userInfo?["userName"] ?? "WOW")"
             self?.view.isUserInteractionEnabled = true
 
         }
 
-        RXCEventBus.default.register(receiver: self, receiveMode: .subtype(EventType.Login.login, EventType.Login.Subtype.failed), queue: DispatchQueue.main) {[weak self] (event) in
+        RXCEventBus.shared.register(receiver: self, receiveMode: .subtype(EventType.Login.login, EventType.Login.Subtype.failed), queue: DispatchQueue.main) {[weak self] (event) in
 
             self?.stateLabel.text = "Login Failed: \(event.userInfo?["reason"] ?? "WOW")"
             self?.view.isUserInteractionEnabled = true
@@ -108,11 +108,11 @@ extension ViewController {
             for _ in 0..<num {
                 let vc = ViewController()
                 normalArray.append(vc)
-                RXCEventBus.default.register(receiver: vc, receiveMode: .custom(UUID().uuidString, {$0.eventType.contains("1")}), selector: #selector(doSomething(sender:)), queue: nil, allowDuplication: true)
+                RXCEventBus.shared.register(receiver: vc, receiveMode: .custom(UUID().uuidString, {$0.eventType.contains("1")}), queue: nil, allowDuplication: true, selector: #selector(doSomething(sender:)))
             }
         }
         measureTime(identifier: "Array Call", quantity: num) {
-            RXCEventBus.default.post(eventType: "111")
+            RXCEventBus.shared.post(eventType: "111")
         }
     }
 

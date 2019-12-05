@@ -8,17 +8,21 @@
 
 import Foundation
 
+///describe a receiver
 public protocol REBEventBusReceiver: AnyObject {
     func eventBus(didReceive event:REBEventProtocol)
 }
 
+///describe an event
 public protocol REBEventProtocol {
     var eventType:String {get}
     var eventSubtype:String? {get}
+    ///we can pass an object to all receivers
     var object:Any? {get}
     var userInfo:[AnyHashable:Any]? {get}
 }
 
+///a simple implementation of REBEventProtocol
 public struct REBEvent: REBEventProtocol {
     public var eventType: String
     public var eventSubtype: String?
@@ -32,8 +36,7 @@ public struct REBEvent: REBEventProtocol {
 
 }
 
-///A simple event bus, no need to remove observer in deinit
-public final class RXCEventBus {
+extension RXCEventBus {
 
     public enum ReceiveMode: Equatable {
 
@@ -44,8 +47,8 @@ public final class RXCEventBus {
         ///only receive events with specific eventType and eventSubtype
         case subtype(String, String)
 
-        ///custom receive mode
-        ///the first string is for identifing the receiver, should be a unique string while uuid is recommended, if you want to remove a receiver with custom mode, should save the identifier and pass it in the unregister function
+        ///custom receive mode, use a match closure to match the event
+        ///the first string is for identifing the receiver, should be a unique string while uuid is recommended, if you want to remove a receiver with custom mode, should save the identifier and pass back it in the unregister function
         case custom(String, ((REBEventProtocol)->Bool)?)
 
         public static func == (lhs: RXCEventBus.ReceiveMode, rhs: RXCEventBus.ReceiveMode) -> Bool {
@@ -76,8 +79,11 @@ public final class RXCEventBus {
         ///do not retain receiver
         weak var receiver:AnyObject?
         let receiveMode:ReceiveMode
+        ///the queue the call in, default for current queue (call directly)
         var queue:DispatchQueue?
+        ///the closure to call
         var closure:((REBEventProtocol)->Void)?
+        ///the selector to call
         var selector:Selector?
 
         init(receiver: AnyObject, receiveMode:ReceiveMode) {
@@ -100,7 +106,7 @@ public final class RXCEventBus {
             case .subtype(let type, let subtype):
                 return event.eventType == type && event.eventSubtype == subtype
             case .custom(_, let closure):
-                assert(closure != nil, "Custom ReceiveMode Closure Should Not Be Nil")
+                assert(closure != nil, "Custom ReceiveMode Match Closure Should Not Be Nil")
                 if let c = closure {
                     return c(event)
                 }else {
@@ -129,7 +135,12 @@ public final class RXCEventBus {
         }
     }
 
-    public static let `default`:RXCEventBus = RXCEventBus()
+}
+
+///A simple event bus, no need to remove observer when deinit
+public final class RXCEventBus {
+
+    public static let shared:RXCEventBus = RXCEventBus()
 
     fileprivate lazy var allReceiveModeReceivers:NSMutableArray = NSMutableArray()
     fileprivate lazy var eventTypeReceivers:NSMutableDictionary = NSMutableDictionary()
@@ -148,7 +159,7 @@ public final class RXCEventBus {
 
     ///register a receiver with a selector
     @discardableResult
-    public func register(receiver:AnyObject, receiveMode:ReceiveMode, selector:Selector, queue:DispatchQueue?, allowDuplication:Bool=true)->AnyObject {
+    public func register(receiver:AnyObject, receiveMode:ReceiveMode, queue:DispatchQueue?, allowDuplication:Bool=true, selector:Selector)->AnyObject {
         let registration = ReceiverRegistration(receiver: receiver, receiveMode: receiveMode)
         registration.selector = selector
         registration.queue = queue
@@ -221,12 +232,14 @@ public final class RXCEventBus {
         case .custom(_, _):
             objc_sync_enter(self.customReceivers)
             defer {objc_sync_exit(self.customReceivers)}
+
             if allowDuplication || !self.customReceivers.contains(where: containsClosure) {
                 self.customReceivers.add(registration)
             }
         }
     }
 
+    ///unregister all receiver with pointer and receiveMode
     fileprivate func _unregister(receiver:AnyObject, receiveMode:ReceiveMode) {
 
         let predicate:NSPredicate = NSPredicate(block: { (object, _) -> Bool in
@@ -260,7 +273,9 @@ public final class RXCEventBus {
         }
     }
 
+    ///unregister all receiver with the pointer
     fileprivate func _unregister(all receiver:AnyObject) {
+        //the filter predicate
         let predicate:NSPredicate = NSPredicate(block: { (object, _) -> Bool in
             guard let r1 = (object as? ReceiverRegistration)?.receiver else {return false}
             return r1 !== receiver
